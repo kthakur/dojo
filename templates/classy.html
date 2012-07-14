@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tutorial: Hello Dojo!</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" media="screen">
+    <!-- load Dojo -->
+    <script>
+	    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true
+	        },
+	        parseOnLoad: true,
+	        async: true,
+	        packages: [{
+			    name: "dojo-js",
+			    location: "//{{ site }}/site-media/dojo-js/"
+			}]
+	    };
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+	
+	<script>
+	// Require the module we just created
+	require(["dojo/_base/declare", "dojo/dom","dojo/ready", "dojo-js/classy"], function(declare, dom, ready){
+		ready(function() {
+			 var button = new classy.Button({
+		        onClick: function(){
+		            // Do something:
+		            dom.byId("result1").innerHTML += "Thank you! ";
+		        }
+		    }, "progButtonNode");
+		});
+		
+		// Create a new class
+		var Twitter = declare(null, {
+		    // The default username
+		    username: "defaultUser",
+		     
+		    // The constructor
+		    constructor: function(args){
+		        declare.safeMixin(this,args);
+		    }
+		});
+		
+		var myInstance = new Twitter({
+		    username: "sitepen"
+		});
+		
+		alert(myInstance);
+	});	
+		
+	</script>
+	
+</head>
+<body class="claro">
+    <h1 id="greeting">Hello</h1>
+    <button id="progButtonNode" type="button"></button>
+	<div id="result1"></div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tutorial: Hello Dojo!</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" media="screen">
+    <style>
+    	.someWidgetBase {
+			border: 1px solid #999;
+		}
+		.someWidgetTitle {
+			background-color: #efefef;
+			font-weight: bold;
+		}
+		.someWidgetContainer {
+			margin: 1em;
+			border: 1px solid #ccc;
+			padding: 1em;
+		}
+
+    </style>
+    <!-- load Dojo -->
+    <script>
+	    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true
+	        },
+	        parseOnLoad: true,
+	        async: true,
+	        packages: [{
+			    name: "dojo-js",
+			    location: "//{{ site }}/site-media/dojo-js/"
+			}]
+	    };
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+	
+	<script>
+	// Require the module we just created
+	require(["dojo/_base/declare", "dojo/dom","dojo/ready", "dojo-js/template_widget"], function(declare, dom, ready){
+		ready(function() {
+			 var widget = dijit.byId("myWidget");
+			 //widget.titleNode.innerHTML = "New title";
+			 widget.onClick();
+			 
+		});
+	});	
+		
+	</script>
+	
+</head>
+<body class="claro">
+    <h1>Demo: Using _Templated</h1>
+    	<!-- DomNode -->
+		<div id="myWidget" data-dojo-type="demo.SomeWidget" data-dojo-props="title:'Our Some Widget'"> 
+			<!-- containerNode -->
+			<div>Don't forget to click on the title!</div> 
+			<p>This is arbitrary content!</p>
+			<button data-dojo-type="dijit.form.Button">My Button</button>
+			<p>More arbitrary content!</p>
+			<!-- containerNode -->
+		</div>
+		<!-- DomNode -->
+</body>
+</html>

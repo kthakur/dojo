@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tutorial: Hello Dojo!</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" media="screen">
+    <!-- load Dojo -->
+    <script>
+	    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true
+	        },
+	        parseOnLoad: true,
+	        async: true,
+	        packages: [{
+			    name: "dojo-js",
+			    location: "//{{ site }}/site-media/dojo-js/"
+			}]
+	    };
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+	
+	<script>
+	// Require the module we just created
+	require(["dojo-js/getting_started", "dojo/ready"], function(getting_started,ready){
+		ready(function() {
+			 // Use our module to change the text in the greeting
+		    getting_started.setText("greeting", "Hello Dojo!");
+		 
+		    // After a few seconds, restore the text to its original state
+		    setTimeout(function(){
+		        getting_started.restoreText("greeting");
+		    }, 3000);
+		});
+	});	
+		
+	</script>
+</head>
+<body class="claro">
+    <h1 id="greeting">Hello</h1>
+</body>
+</html>
