@@ -10,10 +10,12 @@ def getting_started(request):
 
 def classy(request):
     site = RequestSite(request)
-    #site = Site.objects.get_current()
     return render_to_response('classy.html', {'site':site}, RequestContext(request))
 
 def template_widget(request):
     site = RequestSite(request)
-    #site = Site.objects.get_current()
     return render_to_response('template_widget.html', {'site':site}, RequestContext(request))
+
+def dijit_layout(request):
+    site = RequestSite(request)
+    return render_to_response('dijit_layout.html', {'site':site}, RequestContext(request))

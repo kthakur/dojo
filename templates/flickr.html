@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tutorial: Hello Dojo!</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" media="screen">
+    <style>
+    	/* Any demo specific styling needed for this tutorial only */
+		html, body {
+		    height: 100%;
+		    margin: 0;
+		    overflow: hidden;
+		    padding: 0;
+		}
+		
+		#appLayout {
+		    height: 100%;
+		}
+		
+		.claro .demoLayout .edgePanel {
+		    background-color: #d0e9fc;
+		}
+		
+		.pageOverlay {
+		    top: 0;
+		    left: 0;
+		    position: absolute;
+		    height: 100%;
+		    width: 100%;
+		    z-index: 1001;
+		    display: block;
+		}
+		
+		#loadingOverlay {
+		    background:  #fff url('http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/images/loadingAnimation.gif') no-repeat 10px 23px;
+		}
+		
+		#loadingOverlay .loadingMessage {
+		    padding: 25px 40px;
+		    color: #999;
+		}
+		
+		.searchInputColumn {
+		    float:left; 
+		    width:100%; 
+		    margin-right: -10em;
+		}
+		.searchInputColumnInner {
+		    padding-top: 2px; 
+		    padding-right: 11em;
+		}
+		.searchButtonColumn {
+		    float:left; 
+		    width: 10em;
+		}
+		#searchBtn {
+		    width: 100%;
+		    display:block;
+		}
+		#searchTerms {
+		    width: 100%;
+		    display:block;
+		}
+		.demoImageList {
+			background-color: #ccc;
+			margin: 0; padding: 0;
+		}
+		.demoImageList li.item img {
+			max-height: 50px;
+			overflow: hidden;
+			margin-right: 10px;
+			cursor:pointer;
+			cursor:hand;
+		}
+		.demoImageList li.item {
+			margin: 0;
+			position: relative;
+			padding: 4px 15px 3px 10px;
+			background-color: #eee;
+			border-top: 2px solid #fff;
+			border-bottom: 1px solid #999;
+			max-height: 60px;
+			overflow: hidden;
+		}
+    	
+    </style>
+    <!-- load Dojo -->
+    <script>
+	    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true
+	        },
+	        parseOnLoad: true,
+	        async: true,
+	        packages: [{
+			    name: "dojo-js",
+			    location: "//{{ site }}/site-media/dojo-js/"
+			}],
+			flickrRequest: {
+		        apikey: "8c6803164dbc395fb7131c9d54843627",
+		        sort:[{
+		            attribute: 'datetaken',
+		            descending: true
+		        }]
+		    }
+	    };
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+	
+	<script>
+	    require(["dojo-js/flickr", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", "dijit/layout/ContentPane", "dojox/data/FlickrRestStore", "dojo/domReady!"], function(flickrApp) {
+			flickrApp.init();
+		});
+	</script>
+		
+	</script>
+</head>
+<body class="claro">
+	<!-- overlay -->
+	<div id="loadingOverlay" class="pageOverlay">
+	    <div class="loadingMessage">Loading...</div>
+	</div>
+	 
+	<!-- application -->
+	<div id="appLayout" class="demoLayout" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline'">
+	    <div class="centerPanel" id="tabs" data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', tabPosition: 'bottom'">
+	        <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: 'About'">
+	 
+	            <h2>Flickr keyword photo search</h2>
+	            <p>Each search creates a new tab with the results as thumbnails</p>
+	            <p>Click on any thumbnail to view the larger image</p>
+	 
+	        </div>
+	    </div>
+	    <div class="edgePanel" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top'">
+	        <div class="searchInputColumn">
+	            <div class="searchInputColumnInner">
+	                <input id="searchTerms" placeholder="search terms">
+	            </div>
+	        </div>
+	        <div class="searchButtonColumn">
+	            <button id="searchBtn">Search</button>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>
