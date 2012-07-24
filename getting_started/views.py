@@ -19,3 +19,7 @@ def template_widget(request):
 def dijit_layout(request):
     site = RequestSite(request)
     return render_to_response('dijit_layout.html', {'site':site}, RequestContext(request))
+
+def datagrid(request):
+    site = RequestSite(request)
+    return render_to_response('datagrid.html', {'site':site}, RequestContext(request))

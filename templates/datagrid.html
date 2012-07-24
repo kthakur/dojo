@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Datagrid</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/resources/dojo.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/grid/resources/Grid.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/grid/resources/claroGrid.css">
+	<style>
+		/* Any demo specific styling needed for this tutorial only */
+		#target-node-id {
+			width: 420px;
+		}
+	</style>
+    <!-- load Dojo -->
+    <script>
+	    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true
+	        },
+	        parseOnLoad: true,
+	        async: true,
+	        isDebug: true,
+	        packages: [{
+			    name: "dojo-js",
+			    location: "//{{ site }}/site-media/dojo-js/"
+			}]
+	    };
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+	
+	<script>
+			var myStore, dataStore, grid;
+			require([
+				"dojo/_base/array",
+				"dojox/data/JsonRestStore",
+				"dojox/grid/DataGrid",
+				"dojo/query",
+				"dojo/domReady!"
+			], function(array, JsonRestStore, DataGrid, query){
+				// create the store
+				poStore = JsonRestStore({allowNoTrailingSlash:false,target:"http://localhost:8000/api/v1/entry"});
+				//console.dir(poStore)
+						
+				poStore.fetch({
+					query:{},
+					onComplete: function(item, request){
+						
+						// create a layout
+						gridLayout = [{
+				            field: "user",
+				            name: 'User',
+				            width: 'auto',
+				            formatter: function(user){
+						        return user.username;
+						    }
+				        },
+				        {
+				            field: 'weight_int',
+				            name: 'weight_int',
+				            width: 'auto',
+				            editable: true
+				        }];
+						// create the grid and connect it to the store
+						var grid = DataGrid({
+						    store: poStore,
+						    items: item.objects,
+						    //query: { user__username: "chaiyawut" },
+						    structure: gridLayout
+						}, "target-node-id" );
+						grid.startup();
+						query("#save").onclick(function(){
+							poStore.save();
+						});
+						
+						
+						
+						
+						
+						
+						//var newObject = poStore.newItem({'user':'/api/v1/user/2/','afternoon_drug_amount_dec':"test"},{parent:item,attribute:'objects'});
+						//poStore.save()
+						/*
+						array.forEach(item.objects, function(){
+							console.dir(i);
+							
+						    //console.log(poStore.getValue(i.objects, "afternoon_drug_amount_int"));
+						});*/
+					}
+					
+				});
+			});
+		
+	</script>
+	
+</head>
+<body class="claro">
+    
+		<h1>Demo: Connecting DataGrid to a Store</h1>
+		<div id="target-node-id"></div>
+		<button id="save">Save</button>
+    
+</body>
+</html>

@@ -2,6 +2,7 @@
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+TASTYPIE_ALLOW_MISSING_SLASH = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -48,7 +49,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/firstuser/dojo/site-media/'
+MEDIA_ROOT = '/home/parallels/workspace/dojo/site-media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -106,7 +107,7 @@ ROOT_URLCONF = 'dojo.urls'
 WSGI_APPLICATION = 'dojo.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/home/firstuser/dojo/templates',
+    '/home/parallels/workspace/dojo/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -122,6 +123,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'getting_started',
     'flickr',
+    'south',
+    'tastypie',
 )
 
 # A sample logging configuration. The only tangible logging

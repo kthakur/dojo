@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Datagrid</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/resources/dojo.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/grid/resources/Grid.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojox/grid/resources/claroGrid.css">
+	<style>
+		/* Any demo specific styling needed for this tutorial only */
+		#target-node-id {
+			width: 420px;
+		}
+	</style>
+    <!-- load Dojo -->
+    <script>
+	    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true
+	        },
+	        parseOnLoad: true,
+	        async: true,
+	        isDebug: true,
+	        packages: [{
+			    name: "dojo-js",
+			    location: "//{{ site }}/site-media/dojo-js/"
+			}]
+	    };
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+	
+	<script>
+			var myStore, dataStore, grid;
+			require([
+				"dojo/store/JsonRest",
+				"dojo/store/Memory",
+				"dojo/store/Cache",
+				"dojox/grid/DataGrid",
+				"dojo/data/ObjectStore",
+				"dojo/query",
+				"dojo/domReady!"
+			], function(JsonRest, Memory, Cache, DataGrid, ObjectStore, query){
+				myStore = Cache(JsonRest({target:"http://{{ site }}/api/v1/entry/"}), Memory());
+				dataStore = ObjectStore({objectStore: myStore});
+				//console.dir(dataStore);
+				//dataStore.getLabel(user);
+				
+				
+				layoutGrid = [{
+		            field: "user",
+		            name: 'User',
+		            width: '200px'
+		        },
+		        {
+		            field: 'morning_drug_size',
+		            name: 'morning_drug_size',
+		            width: '100px'
+		        }];
+
+				
+				grid = new DataGrid({
+					store: dataStore,
+					query: { user__username: "chaiyawut" },
+					queryOptions:{deep:true},
+					structure: layoutGrid
+				}, "target-node-id"); // make sure you have a target HTML element with this id
+				grid.startup();
+				query("#save").onclick(function(){
+					dataStore.save();
+				});
+			});
+		
+	</script>
+	
+</head>
+<body class="claro">
+    
+		<h1>Demo: Connecting DataGrid to a Store</h1>
+		<div id="target-node-id"></div>
+		<button id="save">Save</button>
+    
+</body>
+</html>
