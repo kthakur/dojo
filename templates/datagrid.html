@@ -31,67 +31,79 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
 	
 	<script>
-			var myStore, dataStore, grid;
-			require([
-				"dojo/_base/array",
-				"dojox/data/JsonRestStore",
-				"dojox/grid/DataGrid",
-				"dojo/query",
-				"dojo/domReady!"
-			], function(array, JsonRestStore, DataGrid, query){
-				// create the store
-				poStore = JsonRestStore({allowNoTrailingSlash:false,target:"http://localhost:8000/api/v1/entry"});
-				//console.dir(poStore)
-						
-				poStore.fetch({
-					query:{},
-					onComplete: function(item, request){
-						
-						// create a layout
-						gridLayout = [{
-				            field: "user",
-				            name: 'User',
-				            width: 'auto',
-				            formatter: function(user){
-						        return user.username;
-						    }
-				        },
-				        {
-				            field: 'weight_int',
-				            name: 'weight_int',
-				            width: 'auto',
-				            editable: true
-				        }];
-						// create the grid and connect it to the store
-						var grid = DataGrid({
-						    store: poStore,
-						    items: item.objects,
-						    //query: { user__username: "chaiyawut" },
-						    structure: gridLayout
-						}, "target-node-id" );
-						grid.startup();
-						query("#save").onclick(function(){
-							poStore.save();
-						});
-						
-						
-						
-						
-						
-						
-						//var newObject = poStore.newItem({'user':'/api/v1/user/2/','afternoon_drug_amount_dec':"test"},{parent:item,attribute:'objects'});
-						//poStore.save()
-						/*
-						array.forEach(item.objects, function(){
-							console.dir(i);
-							
-						    //console.log(poStore.getValue(i.objects, "afternoon_drug_amount_int"));
-						});*/
-					}
-					
-				});
-			});
+		/*require(["dojo/_base/xhr", "dojo/io/script"],
+		    function(xhr, io) {
+		         
+		        // Execute a HTTP GET request
+		        io.get({
+		            // The URL to request
+		            url: "http://192.168.1.74:8001/api/v1/entry/",
+		            content:{format:"jsonp"},
+		            callbackParamName: "callback",
+		            // Handle the response any way you'd like!
+		            load: function(result) {
+		                console.log(result);
+		            }
+		        });
+		         
+		});*/
 		
+		var myStore, dataStore, grid;
+		require(["dojo/_base/array", "dojox/data/JsonRestStore", "dojox/grid/DataGrid", "dojo/query", "dojo/domReady!"], function(array, JsonRestStore, DataGrid, query) {
+			
+			// create the store
+			poStore = JsonRestStore({
+				allowNoTrailingSlash : false,
+				target : "/api/v1/entry"
+			});
+			//console.dir(poStore)
+
+			poStore.fetch({
+				query : {},
+				onComplete : function(item, request) {
+					
+					poStore.setValue(item.objects[0].heartrate_third, 'jsonp');
+					poStore.save()
+					console.dir(item.objects[0]);
+
+					// create a layout
+					gridLayout = [{
+						field : "user",
+						name : 'User',
+						width : 'auto',
+						formatter : function(user) {
+							return user.username;
+						}
+					}, {
+						field : 'weight_int',
+						name : 'weight_int',
+						width : 'auto',
+						editable : true
+					}];
+					// create the grid and connect it to the store
+					var grid = DataGrid({
+						store : poStore,
+						items : item.objects,
+						//query: { user__username: "chaiyawut" },
+						structure : gridLayout
+					}, "target-node-id");
+					grid.startup();
+					query("#save").onclick(function() {
+						poStore.save();
+					});
+
+					//var newObject = poStore.newItem({'user':'/api/v1/user/2/','afternoon_drug_amount_dec':"test"},{parent:item,attribute:'objects'});
+					//poStore.save()
+					/*
+					 array.forEach(item.objects, function(){
+					 console.dir(i);
+
+					 //console.log(poStore.getValue(i.objects, "afternoon_drug_amount_int"));
+					 });*/
+				}
+			});
+		});
+
 	</script>
 	
 </head>

@@ -1,4 +1,8 @@
 # Django settings for dojo project.
+import os
+import sys
+
+SITE_ROOT = "/home/parallels/workspace/dojo"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -13,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dojo.db',                      # Or path to database file if using sqlite3.
+        'NAME': os.path.join(SITE_ROOT, 'dojo.db'),                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -97,6 +101,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'tastypie.crossdomainxhr.XsSharing',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )

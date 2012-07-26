@@ -27,8 +27,8 @@ class EntryResource(ModelResource):
     class Meta:
         queryset = Record.objects.all()
         resource_name = 'entry'
-        authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
+        authentication = Authentication()
+        authorization = Authorization()
         filtering = {
             'user': ALL_WITH_RELATIONS,
         }
