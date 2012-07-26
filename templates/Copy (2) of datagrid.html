@@ -1,0 +1,152 @@
+{% extends "base/dashboard_base.html" %}
+{% load url from future %}
+
+
+{% block script-local %}
+<script>
+	$(document).ready(function() {
+		$("ul.nav.nav-list > li:has('a')").eq(0).addClass("active");
+	}); 
+</script>
+
+	
+<script>
+		var myStore, dataStore, grid;
+		require(["dojo/_base/array", "dojox/data/JsonRestStore", "dojox/grid/DataGrid", "dojo/query", "dojo/io/script", "dojox/rpc/Service","dojo/domReady!"], function(array, JsonRestStore, DataGrid, query, io, service) {
+
+			var mySmd = {
+                    transport: "JSONP",
+                    envelope: "URL",
+                    additionalParameters: true,
+                    target: "http://192.168.1.74:8001/",                
+
+                    services: {
+                        "getNode": {
+                        "target": "api/v1/entry/",
+                            parameters: [
+                                {format:"jsonp" }                            
+                            ]
+                        }
+                    }
+            };
+
+
+			var myService = new service(mySmd);
+
+			// create the store
+			poStore = JsonRestStore({
+				allowNoTrailingSlash : false,
+				service : myService.getNode
+			});
+			//console.dir(poStore)
+			
+			
+
+			poStore.fetch({
+				onComplete : function(item, request) {
+					
+					console.dir(item.objects[0]);
+					poStore.setValue(item.objects[0], "weight_int", 'jsonp');
+					//poStore.save()
+					console.dir(item.objects[0]);
+					//console.dir(poStore);
+					//var newObject = poStore.newItem({'user':'/api/v1/user/2/','afternoon_drug_amount_dec':"test_jsonp"},{parent:item,attribute:'objects'});
+					//poStore.put(item.get(1),'asd');
+					//poStore.save()
+/*
+					// create a layout
+					gridLayout = [{
+						field : "user",
+						name : 'User',
+						width : 'auto',
+						formatter : function(user) {
+							return user.username;
+						}
+					}, {
+						field : 'weight_int',
+						name : 'weight_int',
+						width : 'auto',
+						editable : true
+					}];
+					// create the grid and connect it to the store
+					var grid = DataGrid({
+						store : poStore,
+						items : item.objects,
+						//query: { user__username: "chaiyawut" },
+						structure : gridLayout
+					}, "target-node-id");
+					grid.startup();
+					query("#save").onclick(function() {
+						poStore.save();
+					});*/
+
+				}
+			});
+		});
+</script>
+
+
+	
+{% endblock %}
+
+{% block right-content %}
+<div class="span9">
+	<div class="row">
+		<div class="span9">
+			<div class="alert alert-info">
+				<a class="close" data-dismiss="alert" href="">×</a>
+				<strong>Heads up!</strong><a>The newly published RMOS Store Review Guidelines are now available.</a></br>
+			</div>
+		</div>
+		<div class="span9">
+			<div class="page-header">
+				<h1>Summary <small>for {{ user.username }}</small></h1>
+			</div>
+			
+			
+			<div id="target-node-id"></div>
+			<button id="save">
+				Save
+			</button>
+			
+			
+			<!-- <h3>Table1</h3>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Username</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="2">1</td>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@mdo</td>
+					</tr>
+					<tr>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@TwBootstrap</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Jacob</td>
+						<td>Thornton</td>
+						<td>@fat</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td colspan="2">Larry the Bird</td>
+						<td>@twitter</td>
+					</tr>
+				</tbody>
+			</table> -->
+		</div>
+	</div>
+</div>
+{% endblock %}
+<!-- Blocks for logged in user -->
